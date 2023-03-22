@@ -3,18 +3,41 @@
 import json
 
 class Database():
+	data = []
 	def __init__(self):
 		print()
 
-	def load(data):
-		self.data = json.loads(data)
+	def load(self, data):
+		#TODO: possibly add self.initialized variable
+		try:
+			self.data = json.loads(data)
+			#array of data
+		except:
+			print("an error occured when reading the database")
+			return false
+
 		#TODO: MD5 checksum
 		return true
 
-	def deleteMember(member):
-		#deletes a member
-		self.data.pop(member, NULL)
+	#TODO: error handling
+	def deleteMember(self, member):
+		#member = integer
 
-	def setMember(member, value):
+		#deletes a member
+		self.data.pop(member)
+
+	def createMember(self, value):
+		#member = integer
+		#value = dictionary?
 		#creates or changes a member
-		self.data.member = value
+		self.data.append(value)
+
+	def editMember(self, member, value):
+		#member = integer
+		#value = dictionary?
+		#creates or changes a member
+		self.data[member] = value
+
+	#TODO: delete, temporary function
+	def print(self):
+		print(self.data)
