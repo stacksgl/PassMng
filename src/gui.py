@@ -16,9 +16,15 @@ class MainWindow(QMainWindow):
 
 	def addEntryClicked(self):
 		self.changeState("enmod")
+		self.eModFrame.pushState("create", -1)
+		self.eModFrame.clearInputBoxes()
 
 	def modifyEntryClicked(self):
 		self.changeState("enmod")
+
+		i = self.dbViewFrame.getIndexSelected()
+		self.eModFrame.pushState("edit", i)
+		self.eModFrame.changeInputBoxes(self.database.getMemberAt(i))
 
 	def changeState(self, state):
 		#hide bottom part based on the state
@@ -29,6 +35,12 @@ class MainWindow(QMainWindow):
 		self.modifyEntry.setEnabled(state != "enmod")
 		self.addEntry.setEnabled(state != "enmod")
 		self.dbViewFrame.setHidden(state != "dbview")
+
+		#TODO: move update method somewhere else, when the database is actually modified
+		if state == "dbview":
+			self.dbViewFrame.updateList()
+
+		self.database.print()
 
 	def __init__(self):
 		super().__init__()
