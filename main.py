@@ -1,15 +1,16 @@
+##  __main__? check
 import sys
 
 from src.gui import *
 
-"""app = QApplication(sys.argv)
+app = QApplication(sys.argv)
 
-#window = MainWindow()
+window = MainWindow()
 window.show()
 
-app.exec()"""
+app.exec()
 
-db = Database()
+"""db = Database()
 db.createMember({
 	"title": "visible title",
 	"username": "visible username",
@@ -25,4 +26,4 @@ db.editMember(0, {
 })
 db.print()
 db.deleteMember(0)
-db.print()
+db.print()"""
