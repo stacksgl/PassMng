@@ -1,24 +1,45 @@
 # parse a database from a string to an object inside the class
 
 import json
+from src.aes256 import *
 
 class Database():
 	#data = []
-	data = [{'title': 'first', 'username': 'user 1', 'password': 'pass 1', 'note': ''}, {'title': 'second', 'username': 'user 2', 'password': 'pass 2', 'note': ''}]
+	password = ""
+	'''data = [
+		{'title': 'first', 'username': 'user 1', 'password': 'pass 1', 'note': ''},
+		{'title': 'second', 'username': 'user 2', 'password': 'pass 2', 'note': ''}
+	]'''
+	data = []
 	def __init__(self):
 		print()
 
-	def load(self, data):
+	def encrypt(self):
+		aes = AESCipher(self.password)
+		crypted = aes.encrypt(json.dumps(self.data))
+		return crypted
+
+	def decrypt(self, data, password):
+		aes = AESCipher(password)
+		decrypted = aes.decrypt(data)
+		return decrypted
+
+	def new(self, password):
+		self.password = password
+		self.data = []
+
+	def load(self, data, password):
 		#TODO: possibly add self.initialized variable
+		raw = self.decrypt(data, password)
 		try:
-			self.data = json.loads(data)
-			#array of data
+			self.data = json.loads(raw)
 		except:
 			print("an error occured when reading the database")
-			return false
+			return False
 
+		self.password = password
 		#TODO: MD5 checksum
-		return true
+		return True
 
 	def getTitles(self):
 		product = []

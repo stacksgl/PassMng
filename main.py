@@ -1,3 +1,4 @@
+##  __main__? check
 import sys
 
 from src.gui import *

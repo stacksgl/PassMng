@@ -23,12 +23,52 @@ class databaseOverviewWindow(QFrame):
 
 		#TODO: make nice instead of a POC
 		self.label.setText(json.dumps(val))
+		
+	def saveDatabase(self):
+		if self.mWin.dbPath:
+			print()
+
+		with open(self.mWin.dbPath, "w") as f:
+			d = f.write(self.mWin.database.encrypt())
+		
+	def createDatabase(self):
+		print()
+
+	def addEntryClicked(self):
+		self.mWin.changeState("enmod")
+		self.mWin.eModFrame.pushState("create", -1)
+		self.mWin.eModFrame.clearInputBoxes()
+
+	def modifyEntryClicked(self):
+		self.mWin.changeState("enmod")
+
+		i = self.mWin.dbViewFrame.getIndexSelected()
+		self.mWin.eModFrame.pushState("edit", i)
+		self.mWin.eModFrame.changeInputBoxes(self.mWin.database.getMemberAt(i))
+
 
 	def __init__(self, mWin):
 		super().__init__()
 		self.mWin = mWin
 
 		layout = QVBoxLayout()
+
+		topButtons = QHBoxLayout()
+		layout.addLayout(topButtons)
+
+		self.saveButton = QPushButton("Save database")
+		self.saveButton.clicked.connect(self.saveDatabase)
+		topButtons.addWidget(self.saveButton)
+
+		self.addEntry = QPushButton("Add entry")
+		self.addEntry.clicked.connect(self.addEntryClicked)
+		topButtons.addWidget(self.addEntry)
+
+		self.modifyEntry = QPushButton("Modify entry")
+		self.modifyEntry.clicked.connect(self.modifyEntryClicked)
+		topButtons.addWidget(self.modifyEntry)
+
+		topButtons.addStretch(1)
 
 		self.list = QListWidget()
 		self.list.currentItemChanged.connect(self.selectionChanged)
