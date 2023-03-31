@@ -1,0 +1,8 @@
+Crypto.Cipher==1
+pathlib==1.0.1
+pycryptodome==3.17
+pycryptodome-test-vectors==1.0.12
+pycryptodomex==3.16.0
+PyQt5==5.15.9
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.11.1
